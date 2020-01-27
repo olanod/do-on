@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Do on</title>
+		<script type="module" src="on.js" async></script>
+</head>
+
+<body>
+		<h1>Do-on element</h1>
+		<p>
+				Is a built-in custom element to be applied on <code>&lt;template&gt;</code> with the
+				<code>is="do-on"</code> attribute. It will repeat the contents of the template for each element
+				in the iterable payload received via the broadcast channel specified with the attribute
+				<code>channel="name-of-broadcast-channel"</code>.
+		</p>
+
+		<h2>Example</h2>
+		<p>A list of doggos</p>
+		<ul>
+				<li><i>Fufu</i>(Static)</li>
+
+				<template is="do-on" channel="doggos">
+						<li><i></i>(Dynamic)</li>
+
+						<script type="module">
+						 // For convenience a script module inside the template that exports an "update"
+						 // function will be called for each item of the received message with the template content
+						 export const update = (content, {name}) =>
+								 content.querySelector('i').textContent = name
+						</script>
+				</template>
+		</ul>
+
+		<script type="module">
+		 const chan = new BroadcastChannel('doggos')
+		 setTimeout(() => {
+				 chan.postMessage([{name: 'Bones'}, {name: 'Goodboi'}, {name: 'Bark'}])
+		 }, 100)
+		</script>
+</body>
+
+</html>

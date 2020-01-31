@@ -31,7 +31,7 @@ export class On extends HTMLTemplateElement {
 	constructor() {
 		super()
 		this.#script = this.content.querySelector('script')
-		this.content.removeChild(this.#script)
+		if (this.#script) this.content.removeChild(this.#script)
 		this.channel = this.getAttribute('channel')
 		if (this.channel)
 			this.#chan = new BroadcastChannel(this.channel)

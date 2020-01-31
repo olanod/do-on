@@ -7,10 +7,13 @@ const removeSiblings = ele => {
 	while (ele.nextSibling) ele.nextSibling.remove()
 }
 
+const isJSON = s => typeof s === 'string' && (s.startsWith('[') || s.startsWith('{'))
+
 export class On extends HTMLTemplateElement {
 	#chan
 	#script
 	#onMsg = ({data}) => {
+		data = isJSON(data) ? JSON.parse(data) : data
 		data = data.map(d => {
 			this.updateContent(this.content, d)
 			return this.content.cloneNode(true)

@@ -38,6 +38,8 @@
 		 const chan = new BroadcastChannel('doggos')
 		 setTimeout(() => {
 				 chan.postMessage([{name: 'Bones'}, {name: 'Goodboi'}, {name: 'Bark'}])
+				 // also JSON strings
+				 chan.postMessage('[{"name": "Spot"}]')
 		 }, 100)
 		</script>
 </body>
